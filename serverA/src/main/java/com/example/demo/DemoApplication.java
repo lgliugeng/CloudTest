@@ -21,6 +21,6 @@ public class DemoApplication {
 
     @RequestMapping("/serverA")
     public String serverA(String info){
-        return "This is " + info + " port:" + port + "111";
+        return "This is " + info + " port:" + port ;
     }
 }
