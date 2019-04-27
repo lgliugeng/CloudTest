@@ -28,21 +28,23 @@ public class TestController {
 
     @RequestMapping(value = "/dataToPdf2")
     @ResponseBody
-    public ApiResult dataToPdfTest2() {
+    public ApiResult dataToPdfTest2() throws Exception{
         ApiResult apiResult = new ApiResult("0","ok");
-        String s = ToolHttp.post(false,"http://localhost:8081/cloudTest/cloud/test/dataToPdf");
-        apiResult.setData(s);
+        //String s = ToolHttp.post(false,"http://localhost:8081/cloudTest/cloud/test/dataToPdf");
+        apiResult = this.dataToPdfTest();
+        //apiResult.setData(s);
         return apiResult;
     }
     @RequestMapping(value = "/dataToPdf")
     @ResponseBody
-    public ApiResult dataToPdfTest(){
+    public ApiResult dataToPdfTest()throws Exception{
         ApiResult apiResult = new ApiResult("0","ok");
         //获取数据库所有表
         List<Map<String,Object>> tableListAll = dataToPdf.getAllTable();
         //将数据库信息写入数据pdf文档
-        apiResult = dataToPdf.dataToPdf(tableListAll,"E:/数据库文档.pdf");
-        return apiResult;
+        apiResult = dataToPdf.dataToPdf(tableListAll,"E:/数据库文档.pdf"); throw new Exception("异常");
+
+       //return apiResult;
     }
 
     public static void main(String[] args) {

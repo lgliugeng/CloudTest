@@ -24,6 +24,6 @@ public class WebConfiguration implements WebMvcConfigurer {
     * @创建人    liugeng
     */
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(getShortUrlInterceptor()).addPathPatterns("/**").excludePathPatterns("/**/index/**","/**/cloud/test/dataToPdf/**","/**/error/**","/error.html","/**/cloudS/**");
+        registry.addInterceptor(getShortUrlInterceptor()).addPathPatterns("/**").excludePathPatterns("/**/index/**","/**/cloud/test/**","/**/error/**","/error.html","/**/cloudS/**","/**/acutator/httptrace/**");
     }
 }
