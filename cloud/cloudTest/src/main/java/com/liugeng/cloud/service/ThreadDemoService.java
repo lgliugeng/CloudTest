@@ -5,9 +5,7 @@ import com.liugeng.cloud.entity.ApiResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -16,6 +14,53 @@ public class ThreadDemoService {
 
     @Autowired
     private RedisService redisService;
+
+    public void noThread(){
+        for (int i = 0; i < 50000; i++) {
+            System.out.println(i);
+        }
+    }
+
+    public void isThread(){
+        ExecutorService pool = Executors.newFixedThreadPool(5);//创建线程池
+        for (int i = 0; i < 50000; i++) {
+            final int j = i;
+            Future future = pool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        //lock.lock();
+                        System.out.println(j);
+                    }catch (Exception e){
+
+                    }finally {
+                        //lock.unlock();
+                    }
+                }
+            });
+        }
+    }
+
+    public void isSyncThread(){
+        ExecutorService pool = Executors.newFixedThreadPool(5);//创建线程池
+        Lock lock = new ReentrantLock();
+        for (int i = 0; i < 50000; i++) {
+            final int j = i;
+            Future future = pool.submit(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        lock.lock();
+                        System.out.println(j);
+                    }catch (Exception e){
+
+                    }finally {
+                        lock.unlock();
+                    }
+                }
+            });
+        }
+    }
 
     public ApiResult executorsPoolDemo(){
         ApiResult apiResult = new ApiResult("0","ok");

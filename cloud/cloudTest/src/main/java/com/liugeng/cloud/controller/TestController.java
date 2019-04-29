@@ -90,6 +90,30 @@ public class TestController {
         return apiResult;
     }
 
+    @RequestMapping(value = "/noThread")
+    @ResponseBody
+    public ApiResult noThread(){
+        ApiResult apiResult = new ApiResult("0","ok");
+        threadDemoService.noThread();
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/isThread")
+    @ResponseBody
+    public ApiResult isThread(){
+        ApiResult apiResult = new ApiResult("0","ok");
+        threadDemoService.isThread();
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/isSyncThread")
+    @ResponseBody
+    public ApiResult isSyncThread(){
+        ApiResult apiResult = new ApiResult("0","ok");
+        threadDemoService.isSyncThread();
+        return apiResult;
+    }
+
     public static void main(String[] args) {
         System.out.println();
     }
