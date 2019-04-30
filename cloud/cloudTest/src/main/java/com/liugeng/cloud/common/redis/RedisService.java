@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.TimeoutUtils;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.annotation.Resource;
 import java.util.HashSet;
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisService implements IRedisService {
 
 
-    @Resource
+    @Autowired
    private RedisTemplate<String,Object> redisTemplate;
 
     @Override
@@ -164,5 +165,11 @@ public class RedisService implements IRedisService {
     @Override
     public Long incrByOne(String key) {
         return null;
+    }
+
+    public Jedis getJedis(){
+        Jedis jedis = new Jedis("127.0.0.1");
+        jedis.auth("JuBoon123");
+        return jedis;
     }
 }

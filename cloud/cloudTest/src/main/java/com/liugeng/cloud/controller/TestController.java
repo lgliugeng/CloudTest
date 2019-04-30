@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import redis.clients.jedis.Jedis;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -115,6 +116,15 @@ public class TestController {
     }
 
     public static void main(String[] args) {
-        System.out.println();
+        //实例化一个客户端
+        Jedis jedis = new Jedis("localhost");
+        jedis.auth("Juboon123");
+        //ping下，看看是否通的
+        System.out.println("Server is running: " + jedis.ping());
+        //保存一个
+        jedis.set("leiTest", "localhost Connection  sucessfully");
+        //获取一个
+        String leite=jedis.get("leiTest");
+        System.out.println("leiTest键值为: " +leite);
     }
 }
