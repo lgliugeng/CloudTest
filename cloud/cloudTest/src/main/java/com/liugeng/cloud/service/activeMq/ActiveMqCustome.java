@@ -7,6 +7,7 @@ import org.springframework.jms.annotation.JmsListener;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.Jedis;
 
 import javax.jms.*;
 
@@ -53,11 +54,28 @@ public class ActiveMqCustome {
         //关闭连接
         connection.close();
     }
-
     @JmsListener(destination = "queueName",containerFactory = "jmsListenerContainerQueue")
     @SendTo("outName")
     public String listenQueue(String string){
         System.out.println("customeListen:"+string);
         return "收到消息："+ string + "over!!!";
     }
+
+}
+
+class customeThread implements Runnable{
+
+    private String string;
+
+    private Jedis jedis;
+
+    public customeThread(String string){
+        this.string = string;
+    }
+
+    @Override
+    public void run() {
+    }
+
+
 }
