@@ -5,6 +5,7 @@ import com.liugeng.cloud.common.util.ToolHttp;
 import com.liugeng.cloud.entity.ApiResult;
 import com.liugeng.cloud.service.DataToPdf;
 import com.liugeng.cloud.service.ThreadDemoService;
+import com.liugeng.cloud.service.activeMq.ActiveMqProducer;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,6 +35,9 @@ public class TestController {
 
     @Autowired
     private ThreadDemoService threadDemoService;
+
+    @Autowired
+    private ActiveMqProducer activeMqProducer;
 
 
     @RequestMapping(value = "/dataToPdf2")
@@ -114,6 +118,14 @@ public class TestController {
         threadDemoService.isSyncThread();
         return apiResult;
     }
+    @RequestMapping(value = "/activeMq")
+    @ResponseBody
+    public ApiResult activeMq(){
+        ApiResult apiResult = new ApiResult("0","ok");
+        activeMqProducer.produceQueueMessage();
+        return apiResult;
+    }
+
 
     public static void main(String[] args) {
         //实例化一个客户端

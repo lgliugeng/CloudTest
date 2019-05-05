@@ -169,7 +169,7 @@ public class RedisService implements IRedisService {
 
     public Jedis getJedis(){
         Jedis jedis = new Jedis("127.0.0.1");
-        jedis.auth("JuBoon123");
+        jedis.auth("Juboon123");
         return jedis;
     }
 }
