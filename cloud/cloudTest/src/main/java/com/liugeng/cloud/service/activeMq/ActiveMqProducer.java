@@ -60,7 +60,7 @@ public class ActiveMqProducer{
     * @创建时间  2019/5/5 10:13
     * @创建人    liugeng
     */
-    @JmsListener(destination = "outName")
+    //@JmsListener(destination = "outName")
     public void listenQueue(String string){
         System.out.println("produceListen:"+string);
     }

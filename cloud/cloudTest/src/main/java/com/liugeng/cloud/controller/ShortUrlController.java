@@ -1,5 +1,7 @@
 package com.liugeng.cloud.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 * @UpdateRemark:   修改内容
 */
 @Controller
+@Api(value = "短链请求接口",tags = "短链请求接口")
 public class ShortUrlController {
 
     /**
@@ -29,6 +32,7 @@ public class ShortUrlController {
     * @创建人    liugeng
     */
     @RequestMapping(value = "/cloudS/{shortUrl}")
+    @ApiOperation(value = "aa",notes = "aa")
     public ModelAndView getRediect(HttpServletRequest request, ModelAndView mav, @PathVariable("shortUrl")String shortUrl){
         mav.setViewName("redirect:" + "http://localhost:8081/cloudTest/index");
         return mav;

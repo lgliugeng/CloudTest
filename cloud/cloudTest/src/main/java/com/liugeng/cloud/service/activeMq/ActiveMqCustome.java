@@ -66,7 +66,7 @@ public class ActiveMqCustome {
     * @创建时间  2019/5/5 10:13
     * @创建人    liugeng
     */
-    @JmsListener(destination = "queueName",containerFactory = "jmsListenerContainerQueue")
+    //@JmsListener(destination = "queueName",containerFactory = "jmsListenerContainerQueue")
     @SendTo("outName")
     public String listenQueue(String string){
         System.out.println("customeListen:"+string);
