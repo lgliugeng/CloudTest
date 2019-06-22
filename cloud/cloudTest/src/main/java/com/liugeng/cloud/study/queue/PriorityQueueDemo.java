@@ -35,6 +35,7 @@ public class PriorityQueueDemo {
         DecimalFormat df = new DecimalFormat("#.##");
         for (int i = 0;i < 8;i++){
             System.out.println(df.format(priorityQueue.poll().distance));
+            System.out.println("队列数量：" + priorityQueue.size());
         }
     }
 
