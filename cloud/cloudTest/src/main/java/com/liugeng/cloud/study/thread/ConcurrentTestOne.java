@@ -18,7 +18,10 @@ public class ConcurrentTestOne {
         a.add(6L);
         a.add(7L);
         a.add(8L);
-        ConcurrentTestOne.excute(a,1000);
+        AtomicInteger integer = new AtomicInteger(0);
+        System.out.println("**************************" + integer.get());
+        ConcurrentTestOne.excute2(integer);
+        System.out.println("**************************" + integer.get());
     }
 
     /**
@@ -72,8 +75,43 @@ public class ConcurrentTestOne {
     * @创建人    liugeng
     */
     public static void excute1(CopyOnWriteArrayList<Long> a,int count){
+                final CountDownLatch countDownLatch = new CountDownLatch(10000);
+                AtomicInteger integer = new AtomicInteger(0);
+                ExecutorService pool = Executors.newFixedThreadPool(5);
+                for (int i = 0 ;i< 10000;i++) {
+                    final int j = i;
+                    pool.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            System.out.println(Thread.currentThread().getName() + "：" + j);
+                            integer.addAndGet(1);
+                            if(j == 9999){
+                                try {
+                                    Thread.sleep(10000);
+                                }catch (Exception e){
+                                    System.out.println("等待10秒异常");
+                                }
+                            }
+                            //countDownLatch.countDown();
+                        }
+                    });
+                }
+                try {
+                    try {
+                        Thread.sleep(20000);
+                    }catch (Exception e){
+                        System.out.println("等待20秒异常");
+                    }
+                    System.out.println("************************************************"+integer.get());
+                    pool.shutdown();
+                }catch (Exception e){
+
+        }
+    }
+
+
+    public static void excute2(AtomicInteger integer){
         final CountDownLatch countDownLatch = new CountDownLatch(10000);
-        AtomicInteger integer = new AtomicInteger(0);
         ExecutorService pool = Executors.newFixedThreadPool(5);
         for (int i = 0 ;i< 10000;i++) {
             final int j = i;
@@ -82,24 +120,12 @@ public class ConcurrentTestOne {
                 public void run() {
                     System.out.println(Thread.currentThread().getName() + "：" + j);
                     integer.addAndGet(1);
-                    if(j == 9999){
-                        try {
-                            Thread.sleep(10000);
-                        }catch (Exception e){
-                            System.out.println("等待10秒异常");
-                        }
-                    }
-                    //countDownLatch.countDown();
+                    countDownLatch.countDown();
                 }
             });
         }
         try {
-            try {
-                Thread.sleep(20000);
-            }catch (Exception e){
-                System.out.println("等待20秒异常");
-            }
-            System.out.println("************************************************"+integer.get());
+            countDownLatch.await();
             pool.shutdown();
         }catch (Exception e){
 
