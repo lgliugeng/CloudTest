@@ -157,8 +157,8 @@ public class ConcurrentTestOne {
         List<Integer> aa = new ArrayList<>();
         CopyOnWriteArrayList<Integer> bb = new CopyOnWriteArrayList<>();
         ExecutorService pool = Executors.newFixedThreadPool(100);
-        final CountDownLatch countDownLatch = new CountDownLatch(100000);
-        for (int i = 0; i < 100000; i++) {
+        final CountDownLatch countDownLatch = new CountDownLatch(1000);
+        for (int i = 0; i < 1000; i++) {
             final int j = i;
             pool.execute(()->{
                 //System.out.println(Thread.currentThread().getName() + "执行" + j);
