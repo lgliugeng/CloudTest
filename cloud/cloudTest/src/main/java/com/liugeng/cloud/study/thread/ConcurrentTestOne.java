@@ -24,6 +24,7 @@ public class ConcurrentTestOne {
         System.out.println("**************************" + aa.size());
         ConcurrentTestOne.excute2(aa);
         System.out.println("**************************======================================================================" + aa.size());
+        ConcurrentTestOne.execute3();
     }
 
     /**
@@ -112,6 +113,15 @@ public class ConcurrentTestOne {
     }
 
 
+    /**
+    * 方法说明   测试同一个类下可直接获取数据
+    * @方法名    excute2
+    * @参数      [aa]
+    * @返回值    void
+    * @异常
+    * @创建时间  2019/7/2 15:33
+    * @创建人    liugeng
+    */
     public static void excute2(List<Integer> aa){
         final CountDownLatch countDownLatch = new CountDownLatch(10000);
         ExecutorService pool = Executors.newFixedThreadPool(5);
@@ -131,6 +141,40 @@ public class ConcurrentTestOne {
             pool.shutdown();
         }catch (Exception e){
 
+        }
+    }
+
+    /**
+    * 方法说明   测试线程不安全集合类和线程安全集合类并发下的数据
+    * @方法名    execute3
+    * @参数      []
+    * @返回值    void
+    * @异常      
+    * @创建时间  2019/7/2 15:34
+    * @创建人    liugeng
+    */
+    public static void execute3() {
+        List<Integer> aa = new ArrayList<>();
+        CopyOnWriteArrayList<Integer> bb = new CopyOnWriteArrayList<>();
+        ExecutorService pool = Executors.newFixedThreadPool(100);
+        final CountDownLatch countDownLatch = new CountDownLatch(100000);
+        for (int i = 0; i < 100000; i++) {
+            final int j = i;
+            pool.execute(()->{
+                //System.out.println(Thread.currentThread().getName() + "执行" + j);
+                aa.add(j);
+                bb.add(j);
+                countDownLatch.countDown();
+            });
+        }
+        try {
+            countDownLatch.await();
+            System.out.println(aa.size());
+            System.out.println(bb.size());
+        }catch (Exception e){
+
+        }finally {
+            pool.shutdown();
         }
     }
 }
