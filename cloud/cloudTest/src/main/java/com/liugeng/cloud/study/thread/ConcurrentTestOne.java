@@ -57,6 +57,8 @@ public class ConcurrentTestOne {
             }
         }catch (Exception e){
             System.out.println("异常" + e.getMessage());
+        }finally {
+            pool.shutdown();
         }
     }
 
