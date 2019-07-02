@@ -1,5 +1,7 @@
 package com.liugeng.cloud.study.thread;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -18,10 +20,10 @@ public class ConcurrentTestOne {
         a.add(6L);
         a.add(7L);
         a.add(8L);
-        AtomicInteger integer = new AtomicInteger(0);
-        System.out.println("**************************" + integer.get());
-        ConcurrentTestOne.excute2(integer);
-        System.out.println("**************************" + integer.get());
+        List<Integer> aa = new ArrayList<>();
+        System.out.println("**************************" + aa.size());
+        ConcurrentTestOne.excute2(aa);
+        System.out.println("**************************======================================================================" + aa.size());
     }
 
     /**
@@ -110,7 +112,7 @@ public class ConcurrentTestOne {
     }
 
 
-    public static void excute2(AtomicInteger integer){
+    public static void excute2(List<Integer> aa){
         final CountDownLatch countDownLatch = new CountDownLatch(10000);
         ExecutorService pool = Executors.newFixedThreadPool(5);
         for (int i = 0 ;i< 10000;i++) {
@@ -119,7 +121,7 @@ public class ConcurrentTestOne {
                 @Override
                 public void run() {
                     System.out.println(Thread.currentThread().getName() + "：" + j);
-                    integer.addAndGet(1);
+                    aa.add(j);
                     countDownLatch.countDown();
                 }
             });
