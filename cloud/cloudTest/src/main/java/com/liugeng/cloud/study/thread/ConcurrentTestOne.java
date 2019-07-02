@@ -4,6 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class ConcurrentTestOne {
 
@@ -56,6 +57,50 @@ public class ConcurrentTestOne {
             }
         }catch (Exception e){
             System.out.println("异常" + e.getMessage());
+        }
+    }
+
+    /**
+    * 方法说明   线程并发计数（需要信号量阻塞线程或者线程等待，或者线程返回，直接异步获取计数不准确）
+    * @方法名    excute1
+    * @参数      [a, count]
+    * @返回值    void
+    * @异常
+    * @创建时间  2019/7/2 10:59
+    * @创建人    liugeng
+    */
+    public static void excute1(CopyOnWriteArrayList<Long> a,int count){
+        final CountDownLatch countDownLatch = new CountDownLatch(10000);
+        AtomicInteger integer = new AtomicInteger(0);
+        ExecutorService pool = Executors.newFixedThreadPool(5);
+        for (int i = 0 ;i< 10000;i++) {
+            final int j = i;
+            pool.execute(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName() + "：" + j);
+                    integer.addAndGet(1);
+                    if(j == 9999){
+                        try {
+                            Thread.sleep(10000);
+                        }catch (Exception e){
+                            System.out.println("等待10秒异常");
+                        }
+                    }
+                    //countDownLatch.countDown();
+                }
+            });
+        }
+        try {
+            try {
+                Thread.sleep(20000);
+            }catch (Exception e){
+                System.out.println("等待20秒异常");
+            }
+            System.out.println("************************************************"+integer.get());
+            pool.shutdown();
+        }catch (Exception e){
+
         }
     }
 }
