@@ -1,7 +1,6 @@
 package com.liugeng.cloud.study.thread;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -25,6 +24,7 @@ public class ConcurrentTestOne {
         ConcurrentTestOne.excute2(aa);
         System.out.println("**************************======================================================================" + aa.size());
         ConcurrentTestOne.execute3();
+        ConcurrentTestOne.execute4();
     }
 
     /**
@@ -171,6 +171,39 @@ public class ConcurrentTestOne {
             countDownLatch.await();
             System.out.println(aa.size());
             System.out.println(bb.size());
+            System.out.println(bb);
+        }catch (Exception e){
+
+        }finally {
+            pool.shutdown();
+        }
+    }
+
+    public static void execute4() {
+        Map<Integer,Integer> map = new HashMap<>();
+        for (int i = 0; i < 1000; i++) {
+            map.put(i,i);
+        }
+        Map<Integer,Integer> syncMap = Collections.synchronizedMap(map);
+        CopyOnWriteArrayList<Integer> aa = new CopyOnWriteArrayList<>();
+        CopyOnWriteArrayList<Integer> bb = new CopyOnWriteArrayList<>();
+        ExecutorService pool = Executors.newFixedThreadPool(100);
+        final CountDownLatch countDownLatch = new CountDownLatch(1000);
+        for (int i = 0; i < 1000; i++) {
+            final int j = i;
+            pool.execute(()->{
+                //System.out.println(Thread.currentThread().getName() + "执行" + j);
+                aa.add(map.get(j));
+                bb.add(syncMap.get(j));
+                countDownLatch.countDown();
+            });
+        }
+        try {
+            countDownLatch.await();
+            System.out.println(aa.size());
+            System.out.println(bb.size());
+            System.out.println(bb);
+            System.out.println(countDownLatch.getCount());
         }catch (Exception e){
 
         }finally {
