@@ -22,7 +22,7 @@ public class ShortUrlInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        String ip = request.getRemoteAddr();
+       /* String ip = request.getRemoteAddr();
         //http://localhost:8081/cloudTest/QzYr6r
         System.out.println("拦截器执行*****************************************************************************");
         String requestURI = request.getRequestURI();//获取请求url路径 例如：/cloudTest/aaaa
@@ -33,7 +33,8 @@ public class ShortUrlInterceptor implements HandlerInterceptor {
         }else{//拦截所有方法跳转到错误页
             response.sendRedirect("http://localhost:8081/cloudTest/error.html");
             return false;//进行重定向时需要返回false，如果为true则表示拦截的请求允许通过
-        }
+        }*/
+       return true;
     }
 
     // controller处理完成

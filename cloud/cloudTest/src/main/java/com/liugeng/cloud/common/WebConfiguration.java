@@ -30,7 +30,7 @@ WebConfiguration implements WebMvcConfigurer {
     */
     public void addInterceptors(InterceptorRegistry registry) {
         /**   ("/swagger-resources/**", "/webjars/**","/csrf/**", "/swagger-ui.html/**") 去除swagger2拦截 */
-        registry.addInterceptor(getShortUrlInterceptor()).addPathPatterns("/**").excludePathPatterns("/swagger-resources/**", "/webjars/**","/csrf/**", "/swagger-ui.html/**","/**/index/**","/**/cloud/test/**","/**/error/**","/error.html","/**/cloudS/**","/**/acutator/httptrace/**");
+        registry.addInterceptor(getShortUrlInterceptor()).addPathPatterns("/**").excludePathPatterns("/swagger-resources/**", "/webjars/**","/csrf/**", "/swagger-ui.html/**","/**/index/**","/**/cloud/test/**","/**/error/**","/error.html","/**/cloudS/**","/**/acutator/httptrace/**","/**/es/**");
     }
 
 }

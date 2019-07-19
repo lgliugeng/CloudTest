@@ -1,5 +1,9 @@
 package com.liugeng.cloud.study.thread;
 
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 public class ThreadWaitTest4 extends Thread {
 
     @Override
@@ -16,7 +20,29 @@ public class ThreadWaitTest4 extends Thread {
     }
 
     public static void main(String[] args) {
-        ThreadWaitTest4 tDemo = new ThreadWaitTest4();
-        tDemo.start();
+        /*ThreadWaitTest4 tDemo = new ThreadWaitTest4();
+        tDemo.start();*/
+        CopyOnWriteArrayList copyOnWriteArrayList = new CopyOnWriteArrayList();
+        for (int i = 0; i < 100000; i++) {
+            System.out.println("main添加" + i);
+            copyOnWriteArrayList.add(i);
+        }
+        System.out.println("添加完成" + copyOnWriteArrayList.size());
+        try {
+            Thread.sleep(1000);
+        }catch (Exception e){
+
+        }
+        print(copyOnWriteArrayList);
+    }
+
+    public static void print(CopyOnWriteArrayList copyOnWriteArrayList){
+        ExecutorService pool = Executors.newFixedThreadPool(100);
+        for (int i = 0; i < copyOnWriteArrayList.size(); i++) {
+            final int k = i;
+            pool.execute(()->{
+                System.out.println(Thread.currentThread().getName() + "输出" + k);
+            });
+        }
     }
 }
