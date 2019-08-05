@@ -6,13 +6,15 @@ import org.apache.http.auth.UsernamePasswordCredentials;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 public class ESClientSpringFactory {
+
+    private Logger logger = LoggerFactory.getLogger(ESClientSpringFactory.class);
 
     public static int CONNECT_TIMEOUT_MILLIS = 1000;
     public static int SOCKET_TIMEOUT_MILLIS = 30000;
@@ -86,7 +88,7 @@ public class ESClientSpringFactory {
         setClientConfigCallbackConfig();
         restClient = builder.build();
         restHighLevelClient = new RestHighLevelClient(builder);
-        System.out.println("init factory");
+        logger.info("init factory");
     }
 
     // 配置连接时间延时
@@ -110,6 +112,23 @@ public class ESClientSpringFactory {
         });
     }
 
+    //修改节点请求（默认向所有节点请求）
+    public void setNodeSelector(){
+        builder.setNodeSelector(NodeSelector.SKIP_DEDICATED_MASTERS);//与任何具有元数据且没有master角色或具有数据data 角色的节点匹配的选择器
+    }
+
+    //设置监听器监听故障节点并进行处理
+    public void setFailureListen(){
+        builder.setFailureListener(new RestClient.FailureListener(){
+            @Override
+            public void onFailure(Node node) {
+                super.onFailure(node);
+                //TODO
+                logger.warn(node.getName() + "故障");
+            }
+        });
+    }
+
     public RestClient getClient(){
         return restClient;
     }
@@ -127,6 +146,6 @@ public class ESClientSpringFactory {
                 e.printStackTrace();
             }
         }
-        System.out.println("close client");
+        logger.info("close client");
     }
 }
