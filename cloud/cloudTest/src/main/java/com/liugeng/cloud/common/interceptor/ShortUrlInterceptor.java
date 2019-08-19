@@ -40,12 +40,12 @@ public class ShortUrlInterceptor implements HandlerInterceptor {
     // controller处理完成
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
-        HandlerMethod handlerMethod = (HandlerMethod) handler;
+       /* HandlerMethod handlerMethod = (HandlerMethod) handler;
         Method method = handlerMethod.getMethod();
         Instant startTime = (Instant) request.getAttribute("logrequestStartTime");
 
         Instant endTime = Instant.now();
-        long executeTime = endTime.toEpochMilli()- startTime.toEpochMilli();
+        long executeTime = endTime.toEpochMilli()- startTime.toEpochMilli();*/
 
     }
 }
