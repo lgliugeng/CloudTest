@@ -4,8 +4,11 @@ import com.liugeng.cloud.common.redis.RedisService;
 import com.liugeng.cloud.common.util.ToolHttp;
 import com.liugeng.cloud.entity.ApiResult;
 import com.liugeng.cloud.service.DataToPdf;
+import com.liugeng.cloud.service.TestService;
 import com.liugeng.cloud.service.ThreadDemoService;
 import com.liugeng.cloud.service.activeMq.ActiveMqProducer;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -22,6 +25,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/cloud/test")
+@Api(value = "测试接口",tags = "测试接口")
 public class TestController {
 
     @Autowired
@@ -39,8 +43,11 @@ public class TestController {
     @Autowired
     private ActiveMqProducer activeMqProducer;
 
+    @Autowired
+    private TestService testService;
 
-    @RequestMapping(value = "/dataToPdf2")
+
+    @RequestMapping(value = "/dataToPdf2",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult dataToPdfTest2() throws Exception{
         ApiResult apiResult = new ApiResult("0","ok");
@@ -49,7 +56,7 @@ public class TestController {
         //apiResult.setData(s);
         return apiResult;
     }
-    @RequestMapping(value = "/dataToPdf")
+    @RequestMapping(value = "/dataToPdf",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult dataToPdfTest()throws Exception{
         ApiResult apiResult = new ApiResult("0","ok");
@@ -61,7 +68,7 @@ public class TestController {
        //return apiResult;
     }
 
-    @RequestMapping(value = "/redisSet")
+    @RequestMapping(value = "/redisSet",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult redisSet(){
         ApiResult apiResult = new ApiResult("0","ok");
@@ -74,7 +81,7 @@ public class TestController {
         return apiResult;
     }
 
-    @RequestMapping(value = "/redisGet")
+    @RequestMapping(value = "/redisGet",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult redisGet(){
         ApiResult apiResult = new ApiResult("0","ok");
@@ -87,7 +94,7 @@ public class TestController {
         return apiResult;
     }
 
-    @RequestMapping(value = "/threadDemo")
+    @RequestMapping(value = "/threadDemo",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult threadDemo(){
         ApiResult apiResult = new ApiResult("0","ok");
@@ -95,7 +102,7 @@ public class TestController {
         return apiResult;
     }
 
-    @RequestMapping(value = "/noThread")
+    @RequestMapping(value = "/noThread",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult noThread(){
         ApiResult apiResult = new ApiResult("0","ok");
@@ -103,7 +110,7 @@ public class TestController {
         return apiResult;
     }
 
-    @RequestMapping(value = "/isThread")
+    @RequestMapping(value = "/isThread",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult isThread(){
         ApiResult apiResult = new ApiResult("0","ok");
@@ -111,18 +118,34 @@ public class TestController {
         return apiResult;
     }
 
-    @RequestMapping(value = "/isSyncThread")
+    @RequestMapping(value = "/isSyncThread",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult isSyncThread(){
         ApiResult apiResult = new ApiResult("0","ok");
         threadDemoService.isSyncThread();
         return apiResult;
     }
-    @RequestMapping(value = "/activeMq")
+    @RequestMapping(value = "/activeMq",method = RequestMethod.GET)
     @ResponseBody
     public ApiResult activeMq(){
         ApiResult apiResult = new ApiResult("0","ok");
         activeMqProducer.produceQueueMessage();
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/batchUpdate",method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "测试批量更新")
+    public ApiResult batchUpdate(){
+        ApiResult apiResult = testService.batchUpdateAppletUserBak();
+        return apiResult;
+    }
+
+    @RequestMapping(value = "/selectAppletUserBak",method = RequestMethod.POST)
+    @ResponseBody
+    @ApiOperation(value = "测试查询")
+    public ApiResult selectAppletUserBak(){
+        ApiResult apiResult = testService.selectAppletUserBak();
         return apiResult;
     }
 

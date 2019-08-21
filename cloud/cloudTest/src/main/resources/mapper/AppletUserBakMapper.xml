@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.liugeng.cloud.mapper.AppletUserBakMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.liugeng.cloud.entity.AppletUserBak">
+        <result column="id" property="id" />
+        <result column="openId" property="openId" />
+        <result column="appletOpenId" property="appletOpenId" />
+        <result column="publicOpenId" property="publicOpenId" />
+        <result column="nickName" property="nickName" />
+        <result column="headImgUrl" property="headImgUrl" />
+        <result column="sex" property="sex" />
+        <result column="country" property="country" />
+        <result column="province" property="province" />
+        <result column="city" property="city" />
+        <result column="language" property="language" />
+        <result column="unionId" property="unionId" />
+        <result column="createTime" property="createTime" />
+        <result column="phone" property="phone" />
+        <result column="name" property="name" />
+        <result column="xqcUserName" property="xqcUserName" />
+        <result column="xqcUserLogo" property="xqcUserLogo" />
+        <result column="companyName" property="companyName" />
+        <result column="xqcOpenId" property="xqcOpenId" />
+        <result column="type" property="type" />
+        <result column="bindFlag" property="bindFlag" />
+        <result column="updateTime" property="updateTime" />
+        <result column="userCode" property="userCode" />
+        <result column="idCard" property="idCard" />
+        <result column="userId" property="userId" />
+    </resultMap>
+    
+    <select id="selectAppletUserBak" resultType="com.liugeng.cloud.entity.AppletUserBak">
+        select * from applet_user_bak
+    </select>
+    
+    <update id="batchUpdateAppletUserBak" parameterType="java.util.List">
+        <foreach collection="list" item="bean" index="index" open="" close="" separator=";">
+            update applet_user_bak a
+            <set>
+                a.country = #{bean.country}
+            </set>
+            <where>
+                id = #{bean.id}
+            </where>
+        </foreach>
+    </update>
+    
+</mapper>
