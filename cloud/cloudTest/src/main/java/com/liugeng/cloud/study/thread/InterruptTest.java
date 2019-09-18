@@ -37,6 +37,7 @@ public class InterruptTest {
                 try {
                     System.out.println(Thread.currentThread().getName() + "睡眠五秒……当前状态" + Thread.currentThread().isInterrupted());
                     Thread.sleep(30);
+                    //中断状态修改会抛异常，1将不会打印
                     System.out.println(1);
                 }catch (Exception e){
                     e.printStackTrace();
