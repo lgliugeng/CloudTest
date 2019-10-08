@@ -1,5 +1,8 @@
 package com.liugeng.cloud.study.thread.threadutils;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Exchanger;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +35,7 @@ public class ExchangerTest {
             }
         });
         threadPool.shutdown();
+        new ConcurrentHashMap();
     }
 
 }
