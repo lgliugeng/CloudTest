@@ -36,6 +36,7 @@ public class RedisLockUtil {
                 return true;
             }
         }
+        // 如果是可重入，需在此判断未超时进行累加，并在解锁的时候进行累减
         return false;
     }
 
