@@ -14,11 +14,11 @@ public class StringUtil {
     * @创建时间  2019/5/5 18:20
     * @创建人    liugeng
     */
-    public String concat(String str,String anoStr){
-        char[] valStr = this.getChars(str);//获取字符以及长度
+    public static String concat(String str,String anoStr){
+        char[] valStr = getChars(str);//获取字符以及长度
         int valStrLen = valStr.length;
 
-        char[] anoValStr = this.getChars(anoStr);//获取另外一个字符和长度
+        char[] anoValStr = getChars(anoStr);//获取另外一个字符和长度
         int anoValStrLen = anoValStr.length;
 
         int newLength = valStrLen + anoValStrLen;
@@ -37,8 +37,8 @@ public class StringUtil {
     * @创建时间  2019/5/5 19:10
     * @创建人    liugeng
     */
-    public String trim(String str){
-        char[] chars = this.getChars(str);//获取数组字符
+    public static String trim(String str){
+        char[] chars = getChars(str);//获取数组字符
         int len = chars.length;
         int st = 0;
         char[] val = chars;
@@ -48,7 +48,7 @@ public class StringUtil {
         while((st < len) && (val[len-1] <= ' ')){//尾位为空格且比首位计数大时
             len--;
         }
-        return ((st > 0) || (len < chars.length)) ? this.substring(st,len,str) : str;
+        return ((st > 0) || (len < chars.length)) ? substring(st,len,str) : str;
     }
 
     /**
@@ -60,8 +60,8 @@ public class StringUtil {
     * @创建时间  2019/5/5 19:06
     * @创建人    liugeng
     */
-    public String substring(int beginIndex,int endIndex,String str){
-        char[] chars = this.getChars(str);//获取字符
+    public static String substring(int beginIndex,int endIndex,String str){
+        char[] chars = getChars(str);//获取字符
         if(beginIndex < 0){
             throw new StringIndexOutOfBoundsException(beginIndex);
         }
@@ -84,7 +84,7 @@ public class StringUtil {
     * @创建时间  2019/5/5 19:19
     * @创建人    liugeng
     */
-    public String replace(CharSequence target,CharSequence replacement,CharSequence str){
+    public static String replace(CharSequence target,CharSequence replacement,CharSequence str){
         return Pattern.compile(target.toString(),Pattern.LITERAL).matcher(str).replaceAll(Matcher.quoteReplacement(replacement.toString()));
     }
 
@@ -97,20 +97,20 @@ public class StringUtil {
     * @创建时间  2019/5/5 19:04
     * @创建人    liugeng
     */
-    public boolean equals(Object obj,Object anoObj){
+    public static boolean equals(Object obj,Object anoObj){
         if(obj == anoObj){//对象一致返回true
             return true;
         }
         if(obj instanceof String && anoObj instanceof String){//对象均为字符串
             String objStr = (String)obj;
-            int len1 = this.getChars(objStr).length;
+            int len1 = getChars(objStr).length;
 
             String anoObjStr = (String)anoObj;
-            int len2 = this.getChars(anoObjStr).length;
+            int len2 = getChars(anoObjStr).length;
 
            if(len1 == len2){//比较字符长度
-               char[] v1 = this.getChars(objStr);
-               char[] v2 = this.getChars(anoObjStr);
+               char[] v1 = getChars(objStr);
+               char[] v2 = getChars(anoObjStr);
                int i = 0;
                while (len1-- != 0){//字符长度一致递减比较字符是否一致
                    if(v1[i] != v2[i]){//字符不一致返回false
@@ -133,8 +133,8 @@ public class StringUtil {
     * @创建时间  2019/5/5 18:12
     * @创建人    liugeng
     */
-    public int length(String str){
-        return this.getChars(str).length;
+    public static int length(String str){
+        return getChars(str).length;
     }
 
     /**
@@ -146,7 +146,7 @@ public class StringUtil {
     * @创建时间  2019/5/5 18:12
     * @创建人    liugeng
     */
-    public char[] getChars(String str){
+    public static char[] getChars(String str){
         return str.toCharArray();
     }
 
@@ -159,32 +159,32 @@ public class StringUtil {
         String str21 = "nice to see you!";
 
         //模拟concat方法
-        String str3 = s.concat(str1, str2);
+        String str3 = concat(str1, str2);
         System.out.println("模拟concat方法 ： " + str3);
 
         //模拟concat方法
-        String str4 = s.concat(s.trim(str1), str2);
+        String str4 = concat(trim(str1), str2);
         System.out.println("模拟trim方法 ： " + str4);
 
         //模拟concat方法
-        String str11 = s.trim(str2);
+        String str11 = trim(str2);
         System.out.println("模拟trim方法 ： " + str11);
 
         //模拟substring
-        String str5 = s.substring(0, 10, str1);
+        String str5 = substring(0, 10, str1);
         System.out.println("模拟trim方法 ： " + str5);
 
         //模拟equals
-        boolean b1 = s.equals(str1, str2);
-        boolean b2 = s.equals(str2,str21);
+        boolean b1 = equals(str1, str2);
+        boolean b2 = equals(str2,str21);
         System.out.println("模拟equals方法 :  b1:" + b1 + " b2:" + b2);
 
         //模拟replace
-        String str6 = s.replace("我是C", " java", str1);
+        String str6 = replace("我是C", " java", str1);
         System.out.println("模拟replace方法 ： " + str6);
 
         //模拟length
-        int length = s.length(str6);
+        int length = length(str6);
         System.out.println("模拟length方法 ： " + length);
     }
 }
