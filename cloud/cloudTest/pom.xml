@@ -146,6 +146,7 @@
 
         <!--swagger-ui依赖-->
         <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/swagger-bootstrap-ui -->
+        <!--使用1.9.3，path参数才会显示在路径中，其他高级版本不会显示-->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>swagger-bootstrap-ui</artifactId>
