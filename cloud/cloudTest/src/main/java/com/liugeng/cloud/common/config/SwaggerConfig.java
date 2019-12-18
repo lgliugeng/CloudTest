@@ -71,10 +71,11 @@ public class SwaggerConfig {
         );
         return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo())
                 // 是否开启
+                .groupName("default")
                 .enable(swaggerEnabled).select()
                 // 扫描的路径包
-                //.apis(RequestHandlerSelectors.basePackage(basePackage))
-                .apis(basePackage(basePackage))
+                .apis(RequestHandlerSelectors.basePackage(basePackage))
+                //.apis(basePackage(basePackage))
                 .apis(RequestHandlerSelectors.withClassAnnotation(Api.class))
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 // 指定路径处理PathSelectors.any()代表所有的路径

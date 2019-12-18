@@ -4,15 +4,10 @@ import com.liugeng.cloud.common.interceptor.ShortUrlInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class
-
-
-
-WebConfiguration implements WebMvcConfigurer {
+public class WebConfiguration implements WebMvcConfigurer {
 
     @Bean
     public ShortUrlInterceptor getShortUrlInterceptor(){
@@ -28,6 +23,7 @@ WebConfiguration implements WebMvcConfigurer {
     * @创建时间  2019/4/26 17:28
     * @创建人    liugeng
     */
+    @Override
     public void addInterceptors(InterceptorRegistry registry) {
         /**   ("/swagger-resources/**", "/webjars/**","/csrf/**", "/swagger-ui.html/**") 去除swagger2拦截 */
         registry.addInterceptor(getShortUrlInterceptor()).addPathPatterns("/**").excludePathPatterns("/swagger-resources/**", "/webjars/**","/csrf/**", "/swagger-ui.html/**","/**/index/**","/**/cloud/test/**","/**/error/**","/error.html","/**/cloudS/**","/**/acutator/httptrace/**","/**/es/**");
