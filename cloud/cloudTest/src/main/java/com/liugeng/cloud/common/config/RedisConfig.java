@@ -31,7 +31,7 @@ public class RedisConfig{
 
     @Bean
     @ConfigurationProperties(prefix = "spring.redis")
-    public JedisConnectionFactory getConnectionFactory(){
+    public JedisConnectionFactory redisConnectionFactory(){
         JedisConnectionFactory connectionFactory = new JedisConnectionFactory();
         JedisPoolConfig jedisPoolConfig = getJedisPoolConfig();
         connectionFactory.setPoolConfig(jedisPoolConfig);
@@ -39,20 +39,21 @@ public class RedisConfig{
     }
 
     @Bean
-    public RedisTemplate<?,?>  getRedisTemplate(){
+    public RedisTemplate<?,?>  redisTemplate(){
         RedisSerializer stringSerializer = new StringRedisSerializer();
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
-        RedisTemplate redisTemplate = new StringRedisTemplate(getConnectionFactory());
+        RedisTemplate redisTemplate = new StringRedisTemplate(redisConnectionFactory());
         redisTemplate.setDefaultSerializer(stringSerializer);
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
         return  redisTemplate;
     }
 
+
     @Bean
     public JedisPool getRedisPool(){
         JedisPoolConfig jedisPoolConfig = getJedisPoolConfig();
-        JedisConnectionFactory connectionFactory = getConnectionFactory();
+        JedisConnectionFactory connectionFactory = redisConnectionFactory();
         logger.info("***************getHostName: " + connectionFactory.getHostName()) ;
         logger.info("***************getPort: " + connectionFactory.getPort()) ;
         logger.info("***************getTimeout: " + connectionFactory.getTimeout()) ;
